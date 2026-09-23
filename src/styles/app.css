@@ -1,0 +1,802 @@
+/* Global frame, type scale, shared components, print. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--letterbox);
+  color: var(--paper);
+  font-family: var(--font-sans);
+  font-size: 19px;
+  line-height: 1.58;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+strong {
+  font-weight: 600;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: var(--radius);
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------------------------------------------------------------- */
+/* Grounds: every colour decision reads from these, so print can    */
+/* flip the dark slides to --glass in one place.                    */
+/* ---------------------------------------------------------------- */
+
+.ground-ink {
+  --bg: var(--ink);
+  --fg: var(--paper);
+  --fg-muted: var(--slate-on-ink);
+  --rule: rgb(242 244 239 / 0.2);
+  --assume-line: var(--chlorosis);
+  --assume-text: var(--chlorosis);
+  --neutral: var(--paper);
+  --focus: var(--iron-on-ink);
+  --us: var(--iron-on-ink);
+  --card-bg: var(--ink-lifted);
+  --card-fg: var(--paper);
+  --link-hover: var(--glass);
+}
+
+.ground-glass {
+  --bg: var(--glass);
+  --fg: var(--ink);
+  --fg-muted: var(--slate-on-glass);
+  --rule: rgb(22 38 30 / 0.2);
+  --assume-line: var(--amber-deep);
+  --assume-text: var(--amber-deep);
+  --neutral: var(--ink);
+  --focus: var(--iron);
+  --us: var(--iron);
+  --card-bg: var(--paper);
+  --card-fg: var(--ink);
+  --link-hover: var(--vein);
+}
+
+/* ---------------------------------------------------------------- */
+/* Stage                                                            */
+/* ---------------------------------------------------------------- */
+
+.letterbox {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--letterbox);
+}
+
+.stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  overflow: hidden;
+  transform-origin: center;
+  background: var(--ink);
+}
+
+.track {
+  display: flex;
+  width: calc(1600px * 5);
+  height: 900px;
+  transition: transform var(--slide-ms) ease-out;
+  will-change: transform;
+}
+
+.slide {
+  position: relative;
+  flex: 0 0 1600px;
+  width: 1600px;
+  height: 900px;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.slide__body {
+  position: absolute;
+  inset: 0 0 var(--rail-h) 0;
+  padding: 64px var(--margin) 0;
+}
+
+/* ---------------------------------------------------------------- */
+/* Type scale (brief Section 4.3), on the 1600 by 900 canvas         */
+/* ---------------------------------------------------------------- */
+
+.t-deck-headline,
+.t-headline,
+.t-figure,
+.wordmark--text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 88;
+}
+
+.t-deck-headline {
+  font-size: 78px;
+  line-height: 1.02;
+  letter-spacing: -0.022em;
+}
+
+.t-headline {
+  font-size: 62px;
+  line-height: 1.06;
+  letter-spacing: -0.018em;
+  max-width: 1408px;
+}
+
+.t-lead {
+  font-size: 25px;
+  line-height: 1.5;
+  letter-spacing: -0.004em;
+  max-width: 62ch;
+}
+
+.t-body {
+  font-size: 19px;
+  line-height: 1.58;
+  max-width: 62ch;
+}
+
+.t-figure {
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: -0.015em;
+  font-variant-numeric: tabular-nums;
+}
+
+.t-label {
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+}
+
+.t-caption {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--fg-muted);
+  max-width: 62ch;
+}
+
+/* Figures align in columns wherever they appear. */
+.t-label,
+.t-caption,
+.t-body,
+.t-lead,
+.rail {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------- */
+/* Claims (brief Section 6)                                         */
+/* ---------------------------------------------------------------- */
+
+.evidence-mark {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 10px;
+  background: var(--vein);
+  vertical-align: 0.06em;
+  flex: none;
+}
+
+.claim--assume {
+  cursor: help;
+}
+
+.claim--assume .claim__text {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--assume-line);
+  text-underline-offset: 5px;
+  text-decoration-skip-ink: none;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.claim--assume:focus-visible {
+  outline-offset: 4px;
+}
+
+/* A 1px bracket outline, not a pill, not a badge, not all caps. */
+.claim__tag {
+  position: relative;
+  display: inline-block;
+  padding: 3px 7px 4px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--assume-text);
+  white-space: nowrap;
+  vertical-align: 0.12em;
+  text-decoration: none;
+  font-variation-settings: normal;
+}
+
+.claim__tag::before,
+.claim__tag::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  border: 1px solid currentColor;
+}
+
+.claim__tag::before {
+  left: 0;
+  border-right: 0;
+}
+
+.claim__tag::after {
+  right: 0;
+  border-left: 0;
+}
+
+/* Block form: a group tagged once (slide 4 process steps). */
+.claim--block {
+  display: block;
+  padding-left: 18px;
+  border-left: 2px dashed var(--assume-line);
+}
+
+.claim--block .claim__text {
+  text-decoration: none;
+}
+
+.claim__note {
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 500;
+  color: var(--fg);
+}
+
+/* Audit mode (key A): every assumption fills solid chlorosis. */
+.is-audit .claim--assume .claim__text {
+  background: var(--chlorosis);
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+
+.is-audit .claim--assume .claim__tag {
+  background: var(--chlorosis);
+  color: var(--ink);
+}
+
+.is-audit .claim--block {
+  background: var(--chlorosis);
+  color: var(--ink);
+  border-left-color: var(--ink);
+  padding: 12px 16px 14px 18px;
+  --fg: var(--ink);
+  --us: var(--iron);
+}
+
+.is-audit .claim--block .claim__text {
+  background: transparent;
+}
+
+/* The proof card: hover or keyboard focus. */
+.claim-card {
+  position: absolute;
+  z-index: 40;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  color: var(--card-fg);
+  font-size: 15px;
+  line-height: 1.45;
+  box-shadow: 0 10px 28px rgb(11 18 14 / 0.28);
+  pointer-events: none;
+}
+
+.claim-card--above {
+  transform: translateY(-100%);
+}
+
+.claim-card__lead {
+  font-weight: 600;
+}
+
+/* Cards are portalled to the stage, so they take the active slide's ground. */
+.stage:has(.slide.ground-glass[aria-hidden="false"]) .claim-card {
+  --card-bg: var(--paper);
+  --card-fg: var(--ink);
+}
+
+.stage:has(.slide.ground-ink[aria-hidden="false"]) .claim-card {
+  --card-bg: var(--ink-lifted);
+  --card-fg: var(--paper);
+  border: 1px solid rgb(242 244 239 / 0.14);
+}
+
+/* ---------------------------------------------------------------- */
+/* Wordmark                                                         */
+/* ---------------------------------------------------------------- */
+
+.wordmark--img {
+  display: block;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+
+.wordmark--text {
+  display: inline-block;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- */
+/* Footer rail                                                      */
+/* ---------------------------------------------------------------- */
+
+.rail {
+  position: absolute;
+  left: var(--margin);
+  right: var(--margin);
+  bottom: 0;
+  height: var(--rail-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-top: 1px solid var(--rule);
+  font-size: 14px;
+  line-height: 1;
+  color: var(--fg-muted);
+}
+
+.rail__start,
+.rail__end {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.rail__logo.wordmark--img {
+  width: 84px;
+}
+
+.rail__logo.wordmark--text {
+  font-size: 16px;
+  color: var(--fg);
+}
+
+.rail__text {
+  color: var(--fg-muted);
+}
+
+.rail__count {
+  min-width: 78px;
+  color: var(--fg-muted);
+}
+
+.rail__audit {
+  font-weight: 600;
+  color: var(--assume-text);
+}
+
+.rail__hint {
+  color: var(--fg);
+}
+
+.key {
+  display: inline-block;
+  min-width: 22px;
+  padding: 3px 6px;
+  border: 1px solid currentColor;
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* Progress rail: five segments, current one filled iron. */
+.progress {
+  display: flex;
+  gap: 6px;
+}
+
+.progress__seg {
+  width: 28px;
+  height: 10px;
+  padding: 0;
+  border: 1px solid var(--fg-muted);
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.progress__seg:hover {
+  border-color: var(--fg);
+}
+
+.progress__seg.is-current {
+  border-color: var(--us);
+  background: var(--us);
+}
+
+/* ---------------------------------------------------------------- */
+/* On-screen controls                                               */
+/* ---------------------------------------------------------------- */
+
+.controls {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms linear;
+}
+
+.controls.is-visible,
+.controls:focus-within {
+  opacity: 1;
+}
+
+.controls__btn {
+  position: absolute;
+  top: 408px;
+  width: 44px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--fg);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.controls:not(.is-visible):not(:focus-within) .controls__btn {
+  pointer-events: none;
+}
+
+.controls__btn:hover {
+  border-color: var(--fg);
+}
+
+.controls__btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.controls__btn--prev {
+  left: 24px;
+}
+
+.controls__btn--next {
+  right: 24px;
+}
+
+.controls__btn path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+/* ---------------------------------------------------------------- */
+/* Presenter notes (N) and source register (S)                      */
+/* ---------------------------------------------------------------- */
+
+.notes {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--rail-h);
+  z-index: 30;
+  height: 300px;
+  padding: 40px var(--margin);
+  background: var(--ink-lifted);
+  color: var(--paper);
+  border-top: 3px solid var(--iron-on-ink);
+}
+
+.notes__heading {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--slate-on-ink);
+  margin-bottom: 16px;
+}
+
+.notes__text {
+  max-width: 62ch;
+  font-size: 30px;
+  line-height: 1.4;
+}
+
+.sources {
+  position: absolute;
+  inset: 0 0 var(--rail-h) 0;
+  z-index: 35;
+  padding: 64px var(--margin);
+  background: var(--ink-lifted);
+  color: var(--paper);
+  --fg-muted: var(--slate-on-ink);
+  overflow: auto;
+}
+
+.sources__heading {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-variation-settings: "SOFT" 0, "WONK" 0, "opsz" 88;
+  font-size: 44px;
+  letter-spacing: -0.015em;
+  margin-bottom: 32px;
+}
+
+.sources__list {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.sources__row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 24px;
+  font-size: 19px;
+  line-height: 1.45;
+}
+
+.sources__row dt {
+  color: var(--slate-on-ink);
+  font-weight: 500;
+}
+
+/* ---------------------------------------------------------------- */
+/* Zoomable images and the lightbox                                 */
+/* ---------------------------------------------------------------- */
+
+.zoom {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.zoom img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.button {
+  padding: 8px 14px;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  --focus: var(--iron);
+}
+
+.button:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.lightbox {
+  max-width: 94vw;
+  max-height: 94vh;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.45);
+  --focus: var(--iron);
+  --fg-muted: var(--slate);
+}
+
+.lightbox::backdrop {
+  background: rgb(11 18 14 / 0.86);
+}
+
+.lightbox__panel {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.lightbox__img {
+  display: block;
+  max-width: calc(94vw - 32px);
+  max-height: calc(94vh - 96px);
+  object-fit: contain;
+}
+
+.lightbox__caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 14px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+/* ---------------------------------------------------------------- */
+/* Motion budget                                                    */
+/* ---------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .track,
+  .controls {
+    transition: none;
+  }
+}
+
+/* ---------------------------------------------------------------- */
+/* Print: five landscape pages, dark grounds inverted to glass      */
+/* ---------------------------------------------------------------- */
+
+@page {
+  size: 1600px 900px;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body,
+  #root {
+    height: auto;
+    background: var(--glass);
+  }
+
+  .letterbox {
+    position: static;
+    overflow: visible;
+    background: none;
+  }
+
+  .stage {
+    position: static;
+    transform: none !important;
+    overflow: visible;
+    background: none;
+  }
+
+  .track {
+    display: block;
+    width: 1600px;
+    height: auto;
+    transform: none !important;
+    transition: none;
+  }
+
+  .slide {
+    break-after: page;
+    page-break-after: always;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .slide:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  .ground-ink {
+    --bg: var(--glass);
+    --fg: var(--ink);
+    --fg-muted: var(--slate-on-glass);
+    --rule: rgb(22 38 30 / 0.2);
+    --assume-line: var(--amber-deep);
+    --assume-text: var(--amber-deep);
+    --neutral: var(--ink);
+    --us: var(--iron);
+  }
+
+  .controls,
+  .notes,
+  .sources,
+  .claim-card,
+  .rail__hint,
+  .rail__audit,
+  .progress,
+  .lightbox {
+    display: none !important;
+  }
+
+  /* Assumption tags print as visible bracketed text. */
+  .claim__tag {
+    padding: 0;
+  }
+
+  .claim__tag::before,
+  .claim__tag::after {
+    position: static;
+    width: auto;
+    border: 0;
+  }
+
+  .claim__tag::before {
+    content: "[";
+  }
+
+  .claim__tag::after {
+    content: "]";
+  }
+}

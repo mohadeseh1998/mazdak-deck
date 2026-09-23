@@ -1,0 +1,35 @@
+/* Design tokens (brief Section 4.2). Custom properties only. */
+:root {
+  --ink: #16261e; /* deep pine. Dark slide ground and all body text on light */
+  --glass: #e4e8e2; /* pale glasshouse grey-green. Light slide ground */
+  --paper: #f2f4ef; /* raised surfaces, image tiles, lightbox backdrop panels */
+  --vein: #2f6b45; /* proven. Evidence marks, confirmations, healthy state */
+  --chlorosis: #e8c33a; /* unproven. Assumption tags, dashed extensions, hatching */
+  --amber-deep: #7a5c06; /* the ONLY yellow permitted for text on a light ground */
+  --iron: #9c4a24; /* the company, the product, the one CTA */
+  --slate: #62706a; /* secondary text, captions, source lines */
+
+  /* BRIEF-QUESTION: --slate measures 4.19:1 on --glass and 3.04:1 on --ink, below
+     WCAG AA for 14px text, and --iron is 2.57:1 on --ink, below 3:1 for a focus
+     ring. These are the nearest variants of the same hues that pass. */
+  --slate-on-glass: #58655f; /* 4.92:1 on glass */
+  --slate-on-ink: #9aa6a0; /* 6.27:1 on ink */
+  --iron-on-ink: #c9713f; /* 4.45:1 on ink, focus ring and rail on dark slides */
+  --ink-lifted: #223329; /* raised panel on the dark ground */
+  --letterbox: #0b120e;
+
+  /* Type */
+  --font-display: "Fraunces", "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --font-sans: "IBM Plex Sans", "Segoe UI", "Helvetica Neue", Arial, system-ui, sans-serif;
+
+  /* Space, on an 8px base */
+  --margin: 96px;
+  --gutter: 72px;
+  --gap-section: 40px;
+  --gap-block: 24px;
+  --gap-tight: 8px;
+  --rail-h: 56px;
+  --radius: 3px;
+
+  --slide-ms: 220ms;
+}

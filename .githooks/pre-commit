@@ -1,0 +1,3 @@
+#!/bin/sh
+# Blocks commits that reintroduce an em dash or withdrawn content.
+exec node scripts/check-content.mjs
