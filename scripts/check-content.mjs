@@ -26,6 +26,10 @@ for (const file of files) {
 
 const src = files.filter((f) => f.startsWith("src/"));
 
+// Copy files where the slide 5 withdrawal sentence is allowed to name what was withdrawn.
+const WITHDRAWAL_FILES = ["src/content/slides.ts", "src/draft2/content.ts"];
+const inWithdrawal = (file, line) => WITHDRAWAL_FILES.includes(file) && line.includes("Withdrawn this week");
+
 // Section 11 list. The two withdrawals on slide 5 are named there on purpose,
 // so they are allowed in slides.ts inside that one sentence only.
 const forbidden = [
@@ -46,9 +50,9 @@ for (const file of src) {
   lines.forEach((line, i) => {
     const at = `${file}:${i + 1}`;
     for (const [re, label] of forbidden) if (re.test(line)) problems.push(`${at}: withdrawn content, ${label}`);
-    if (/9\.375/.test(line) && !(file === "src/content/slides.ts" && line.includes("Withdrawn this week")))
+    if (/9\.375/.test(line) && !inWithdrawal(file, line))
       problems.push(`${at}: CAD 9.375M appears outside the withdrawal line`);
-    if (/lower cost per gram/i.test(line) && !(file === "src/content/slides.ts" && line.includes("Withdrawn this week")))
+    if (/lower cost per gram|per-gram cost/i.test(line) && !inWithdrawal(file, line))
       problems.push(`${at}: cost-per-gram comparison appears outside the withdrawal line`);
     if (/\bEDTA\b/.test(line) && file !== "src/content/chemistry.ts")
       problems.push(`${at}: chelate named directly; use CHELATE.agent`);

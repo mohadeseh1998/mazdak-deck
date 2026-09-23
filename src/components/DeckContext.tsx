@@ -14,6 +14,9 @@ export interface DeckState {
   /** The 1600 by 900 stage element and its current scale, for positioning overlays. */
   stageEl: () => HTMLElement | null;
   scale: number;
+  /** Unique assumptions per slide and in the whole deck, for the audit counter. */
+  claimsPerSlide: number[];
+  claimsInDeck: number;
 }
 
 export const DeckContext = createContext<DeckState | null>(null);

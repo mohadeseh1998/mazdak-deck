@@ -484,7 +484,7 @@ export const ui = {
 /* ------------------------------------------------------------------ */
 
 /** Walks any content value and collects the ids of every assumption in it. */
-function collectClaims(value: unknown, into: Set<ClaimId>): Set<ClaimId> {
+export function collectClaims(value: unknown, into: Set<ClaimId> = new Set()): Set<ClaimId> {
   if (Array.isArray(value)) {
     value.forEach((v) => collectClaims(v, into));
   } else if (value && typeof value === "object") {

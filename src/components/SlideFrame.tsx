@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { claimsInDeck, claimsPerSlide, SLIDE_COUNT, ui, type Slide } from "../content/slides";
+import { SLIDE_COUNT, ui, type Slide } from "../content/slides";
 import { useDeck } from "./DeckContext";
 import { ProgressRail } from "./ProgressRail";
 import { Wordmark } from "./Wordmark";
@@ -32,7 +32,7 @@ export function AuditHint({ className }: { className?: string }) {
 
 /** One 1600 by 900 slide: a landmark region with its own footer rail. */
 export function SlideFrame({ slide, index, className = "", children, footerText }: Props) {
-  const { active, audit } = useDeck();
+  const { active, audit, claimsPerSlide, claimsInDeck } = useDeck();
   const isActive = active === index;
   const ref = useRef<HTMLElement>(null);
 
@@ -50,7 +50,13 @@ export function SlideFrame({ slide, index, className = "", children, footerText 
       data-slide={slide.n}
     >
       <div className="slide__body">{children}</div>
-      <FooterRail slide={slide} index={index} audit={audit} footerText={footerText} />
+      <FooterRail
+        slide={slide}
+        index={index}
+        audit={audit}
+        footerText={footerText}
+        count={ui.auditCount(claimsPerSlide[index], claimsInDeck)}
+      />
     </section>
   );
 }
@@ -60,11 +66,13 @@ function FooterRail({
   index,
   audit,
   footerText,
+  count,
 }: {
   slide: Slide;
   index: number;
   audit: boolean;
   footerText?: string;
+  count: string;
 }) {
   return (
     <footer className="rail">
@@ -79,7 +87,7 @@ function FooterRail({
         )}
       </div>
       <div className="rail__end">
-        {audit && <span className="rail__audit">{ui.auditCount(claimsPerSlide[index], claimsInDeck)}</span>}
+        {audit && <span className="rail__audit">{count}</span>}
         <ProgressRail current={index} />
         <span className="rail__count">{ui.slideOf(slide.n, SLIDE_COUNT)}</span>
       </div>
