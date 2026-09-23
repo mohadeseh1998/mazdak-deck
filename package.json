@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "typecheck": "tsc -b",
     "check": "node scripts/check-content.mjs",
-    "prepare": "git config core.hooksPath .githooks || true"
+    "prepare": "node -e \"try{require('child_process').execSync('git config core.hooksPath .githooks',{stdio:'ignore'})}catch(e){}\""
   },
   "dependencies": {
     "react": "^18.3.1",
