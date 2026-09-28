@@ -27,7 +27,7 @@ for (const file of files) {
 const src = files.filter((f) => f.startsWith("src/"));
 
 // Copy files where the slide 5 withdrawal sentence is allowed to name what was withdrawn.
-const WITHDRAWAL_FILES = ["src/content/slides.ts", "src/draft2/content.ts"];
+const WITHDRAWAL_FILES = ["src/content/slides.ts", "src/draft2/content.ts", "src/draft3/content.ts"];
 const inWithdrawal = (file, line) => WITHDRAWAL_FILES.includes(file) && line.includes("Withdrawn this week");
 
 // Section 11 list. The two withdrawals on slide 5 are named there on purpose,

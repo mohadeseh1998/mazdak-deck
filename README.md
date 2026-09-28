@@ -2,12 +2,13 @@
 
 A five-slide, keyboard-driven presentation built from `mazdak-pitch-deck-build-brief.md` (the single source of truth). Vite, React and TypeScript, plain CSS, no UI framework.
 
-## Two drafts
+## Three drafts
 
-- **Draft 2 (default)**, `http://localhost:5173`: the streamlined revision. One idea per slide, a single clean sans-serif, generous space, a soft crossfade. Every talking point cut from a slide is kept in the presenter notes (press N). Copy lives in `src/draft2/content.ts`.
+- **Draft 3 (default)**, `http://localhost:5173`: keynote style. A black stage, one thought per slide, a handful of words each, and gentle build-ins. Everything cut is kept in the presenter notes (press N). Copy lives in `src/draft3/content.ts`.
+- **Draft 2**, `http://localhost:5173/?draft=2`: the streamlined revision. One idea per slide, a single clean sans-serif, generous space, a soft crossfade. Every talking point cut from a slide is kept in the presenter notes (press N). Copy lives in `src/draft2/content.ts`.
 - **Draft 1**, `http://localhost:5173/?draft=1`: the full brief, built as specified.
 
-Both drafts share the same keys, audit mode, source register, video fallback and print stylesheet.
+All drafts share the same keys, audit mode, source register, video fallback and print stylesheet.
 
 ## Run it
 

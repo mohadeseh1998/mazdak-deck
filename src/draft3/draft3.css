@@ -1,0 +1,657 @@
+/* Draft 3: keynote style. A black stage, centred type, one thought per slide.
+   Scoped under .d3. Meaning system kept: yellow means unproven. */
+
+.d3 {
+  --d3-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", system-ui, sans-serif;
+  --d3-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  font-family: var(--d3-font);
+}
+
+.d3 .ground-ink {
+  --bg: #000000;
+  --fg: #f5f5f7;
+  --fg-muted: #86868b; /* 5.7:1 on black */
+  --rule: rgb(255 255 255 / 0.1);
+  --assume-line: var(--chlorosis);
+  --assume-text: var(--chlorosis);
+  --focus: var(--iron-on-ink);
+  --us: var(--iron-on-ink);
+  --card-bg: #1c1c1e;
+  --card-fg: #f5f5f7;
+  --link-hover: #ffffff;
+}
+
+.d3 .stage {
+  background: #000000;
+}
+
+/* ---- Crossfade between slides ---- */
+
+.d3 .track {
+  position: relative;
+  display: block;
+  width: 1600px;
+  transform: none !important;
+  transition: none;
+}
+
+.d3 .d3-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 600ms var(--d3-ease);
+}
+
+.d3 .d3-slide[aria-hidden="false"] {
+  opacity: 1;
+  z-index: 1;
+}
+
+/* ---- Keynote builds: each element rises in, in order ---- */
+
+.d3-in {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.d3-slide[aria-hidden="false"] .d3-in {
+  animation: d3-rise 900ms var(--d3-ease) both;
+  animation-delay: calc(150ms + var(--step, 0) * 160ms);
+}
+
+@keyframes d3-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d3 .d3-slide {
+    transition: none;
+  }
+
+  .d3-in,
+  .d3-slide[aria-hidden="false"] .d3-in {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
+/* ---- Type ---- */
+
+.d3-hero,
+.d3-title,
+.d3-figure {
+  font-family: var(--d3-font);
+  font-weight: 600;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.d3-hero {
+  font-size: 92px;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  background: linear-gradient(180deg, #ffffff 30%, #a1a1a6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.d3-title {
+  font-size: 84px;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+}
+
+.d3-sub {
+  margin-top: 22px;
+  font-size: 30px;
+  line-height: 1.35;
+  letter-spacing: -0.012em;
+  color: var(--fg-muted);
+  font-weight: 400;
+}
+
+.d3-closer {
+  font-size: 26px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+.d3-fine {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+
+.d3-figure {
+  display: block;
+  font-size: 150px;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  background: linear-gradient(180deg, #ffffff 35%, #8e8e93 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.d3-figure-label {
+  display: block;
+  margin-top: 18px;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--fg-muted);
+}
+
+.d3-company {
+  position: absolute;
+  top: 64px;
+  left: 128px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+.d3-center {
+  position: absolute;
+  inset: 0 0 60px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 128px;
+  text-align: center;
+}
+
+/* ---- Claims, as quiet as possible while still visible ---- */
+
+.d3 .claim--assume .claim__text {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 7px;
+}
+
+.d3 .claim__tag {
+  padding: 0;
+  font-family: var(--d3-font);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  vertical-align: 0.2em;
+}
+
+.d3 .claim__tag::after {
+  display: none;
+}
+
+.d3 .claim__tag::before {
+  position: static;
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  border: 0;
+  border-radius: 50%;
+  background: currentColor;
+  vertical-align: 1px;
+}
+
+.d3 .claim--block {
+  padding: 0;
+  border-left: 0;
+  border-radius: 10px;
+}
+
+.d3 .claim--block .claim__note {
+  margin-top: 18px;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--fg-muted);
+}
+
+/* Audit (A): yellow highlight without shifting anything. */
+.d3.is-audit .claim--assume .claim__text {
+  border-radius: 4px;
+  -webkit-text-fill-color: var(--ink);
+}
+
+.d3.is-audit .claim--block {
+  background: var(--chlorosis);
+  box-shadow: 0 0 0 20px var(--chlorosis);
+  --fg-muted: #3a3616;
+}
+
+.d3.is-audit .claim--block .d3-figure,
+.d3.is-audit .claim--block .d3-title {
+  -webkit-text-fill-color: var(--ink);
+}
+
+.d3.is-audit .claim--block .claim__tag {
+  background: transparent;
+}
+
+.d3 .claim-card {
+  border: 0;
+  border-radius: 14px;
+  padding: 16px 18px;
+  font-family: var(--d3-font);
+  text-align: left;
+  box-shadow: 0 20px 60px rgb(0 0 0 / 0.6);
+}
+
+/* ---- Footer: faint dots only ---- */
+
+.d3-foot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 30px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.d3-foot__audit {
+  font-weight: 500;
+  color: var(--chlorosis);
+}
+
+.d3-dots {
+  display: flex;
+  gap: 10px;
+  opacity: 0.5;
+  transition: opacity 200ms;
+}
+
+.d3-slide:hover .d3-dots {
+  opacity: 1;
+}
+
+.d3-dot {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #48484a;
+  cursor: pointer;
+}
+
+.d3-dot.is-current {
+  background: #f5f5f7;
+}
+
+.d3-hint {
+  position: absolute;
+  top: 64px;
+  right: 128px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--fg-muted);
+}
+
+.d3 .key {
+  border-radius: 5px;
+  font-family: var(--d3-font);
+}
+
+.d3 .controls__btn {
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.1);
+}
+
+.d3 .notes {
+  height: 440px;
+  padding: 44px 128px;
+  border-top: 0;
+  background: rgb(28 28 30 / 0.97);
+  font-family: var(--d3-font);
+}
+
+.d3 .notes--detail .notes__text {
+  font-size: 26px;
+  line-height: 1.4;
+}
+
+.d3 .notes__detail {
+  margin-top: 26px;
+  columns: 2;
+  column-gap: 56px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #c7c7cc;
+}
+
+.d3 .notes__detail li {
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 10px;
+  break-inside: avoid;
+}
+
+.d3 .notes__detail li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.d3 .sources {
+  padding: 96px 128px;
+  background: rgb(28 28 30 / 0.98);
+  font-family: var(--d3-font);
+}
+
+.d3 .sources__heading {
+  font-family: var(--d3-font);
+  letter-spacing: -0.03em;
+}
+
+.d3 .lightbox {
+  border-radius: 16px;
+}
+
+.d3 .button {
+  border-radius: 999px;
+}
+
+/* ================================================================ */
+/* Slide 1: words left, product card right                          */
+/* ================================================================ */
+
+.d3-1__text {
+  position: absolute;
+  left: 128px;
+  top: 50%;
+  width: 760px;
+  transform: translateY(-58%);
+}
+
+.d3-1__card {
+  position: absolute;
+  right: 128px;
+  top: 50%;
+  width: 520px;
+  height: 600px;
+  margin-top: -330px;
+  overflow: hidden;
+  border-radius: 32px;
+  background: #ffffff;
+}
+
+.d3-1__card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 58% 40%;
+}
+
+.d3-1__honesty {
+  position: absolute;
+  left: 128px;
+  bottom: 96px;
+  padding-left: 14px;
+  border-left: 2px solid var(--chlorosis);
+}
+
+.d3-slide--solo .d3-1__text {
+  width: 1200px;
+}
+
+/* ================================================================ */
+/* Slide 2                                                          */
+/* ================================================================ */
+
+.d3-2__figure {
+  margin-top: 72px;
+}
+
+/* ================================================================ */
+/* Slide 3: the pH scale                                            */
+/* ================================================================ */
+
+.d3-scale {
+  position: relative;
+  margin: 64px auto 0;
+  text-align: left;
+}
+
+.d3-scale svg {
+  display: block;
+  overflow: visible;
+}
+
+.d3-zone {
+  fill: #ffffff;
+  fill-opacity: 0.06;
+}
+
+.d3-bar-std {
+  fill: #f5f5f7;
+  fill-opacity: 0.85;
+}
+
+.d3-bar-claim {
+  fill: none;
+  stroke: var(--chlorosis);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 5;
+}
+
+.d3-fade-a {
+  stop-color: var(--chlorosis);
+  stop-opacity: 0.75;
+}
+
+.d3-fade-b {
+  stop-color: var(--chlorosis);
+  stop-opacity: 0;
+}
+
+.d3-axis {
+  stroke: #3a3a3c;
+  stroke-width: 1;
+}
+
+.d3-scale__label {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 19px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: var(--fg);
+}
+
+.d3-scale__label--zone {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--fg-muted);
+}
+
+.d3-scale__tick {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 14px;
+  line-height: 1;
+  color: var(--fg-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.d3-scale__tick.is-first {
+  transform: none;
+}
+
+.d3-scale__tick.is-key {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.d3-slide--3 .d3-closer {
+  margin-top: 56px;
+  color: var(--fg-muted);
+}
+
+/* ================================================================ */
+/* Slide 4: the video is the slide                                  */
+/* ================================================================ */
+
+.d3-4__video {
+  width: 900px;
+  margin-top: 44px;
+}
+
+.d3 .video__frame {
+  border: 0;
+  border-radius: 22px;
+  background: #1c1c1e;
+}
+
+.d3 .video__scrim {
+  background: rgb(0 0 0 / 0.35);
+}
+
+.d3 .video__play {
+  width: 88px;
+  height: 88px;
+  padding-left: 6px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.92);
+}
+
+.d3 .video__play svg {
+  width: 28px;
+  height: 32px;
+}
+
+.d3 .video__unavailable,
+.d3 .video__hint {
+  border-radius: 12px;
+  text-align: left;
+}
+
+.d3 .video__caption {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.d3 .video__alt {
+  font-size: 13px;
+}
+
+/* ================================================================ */
+/* Slide 5                                                          */
+/* ================================================================ */
+
+.d3-5__pair {
+  display: flex;
+  justify-content: center;
+  gap: 140px;
+  margin-top: 72px;
+}
+
+.d3-figure--pair {
+  font-size: 128px;
+}
+
+.d3-5__closer {
+  margin-top: 72px;
+}
+
+.d3-5__withdrawn {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 84px;
+  text-align: center;
+}
+
+/* ================================================================ */
+/* Print: five light pages, nothing hidden that matters             */
+/* ================================================================ */
+
+@media print {
+  .d3 .track {
+    display: block;
+  }
+
+  .d3 .d3-slide {
+    position: relative;
+    opacity: 1 !important;
+    transition: none;
+  }
+
+  .d3-in {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .d3 .ground-ink {
+    --bg: #ffffff;
+    --fg: #1d1d1f;
+    --fg-muted: #6e6e73;
+    --assume-line: var(--amber-deep);
+    --assume-text: var(--amber-deep);
+  }
+
+  .d3-hero,
+  .d3-figure {
+    background: none;
+    color: #1d1d1f;
+    -webkit-text-fill-color: #1d1d1f;
+  }
+
+  .d3-zone {
+    fill: #000000;
+  }
+
+  .d3-bar-std {
+    fill: #1d1d1f;
+  }
+
+  .d3-axis {
+    stroke: #c7c7cc;
+  }
+
+  .d3-dots,
+  .d3-hint,
+  .d3-foot__audit {
+    display: none !important;
+  }
+
+  .d3 .claim__tag::before {
+    display: inline;
+    width: auto;
+    height: auto;
+    margin: 0;
+    border-radius: 0;
+    background: none;
+  }
+
+  .d3 .claim__tag::after {
+    display: inline;
+  }
+}
