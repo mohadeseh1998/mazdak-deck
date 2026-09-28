@@ -22,6 +22,9 @@ const byName = new Map<string, string>(
 
 const pick = (name: string): string | undefined => byName.get(name.toLowerCase());
 
+/** Optional files by name, for slots that appear only when the client adds them. */
+export const assetNamed = pick;
+
 export const assets = {
   logo: pick("logo.png"),
   product: pick("product.jpg"),

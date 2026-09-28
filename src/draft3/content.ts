@@ -4,11 +4,12 @@
 import { CHELATE } from "../content/chemistry";
 import type { ClaimId } from "../content/claims";
 import { collectClaims, type Ground } from "../content/slides";
+import { d3SlidesSixToTen } from "./content6to10";
 
 const agent = CHELATE.agent;
 
 export interface D3Slide {
-  n: 1 | 2 | 3 | 4 | 5;
+  n: number;
   title: string;
   ground: Ground;
   notes: string;
@@ -120,7 +121,8 @@ export const d3Model = {
   ],
 } satisfies D3Slide & Record<string, unknown>;
 
-export const d3Slides = [d3Title, d3Problem, d3Value, d3Solution, d3Model] as const;
+// Slides 6 to 10 (Kawasaki brief) follow the original five unchanged.
+export const d3Slides = [d3Title, d3Problem, d3Value, d3Solution, d3Model, ...d3SlidesSixToTen] as const;
 
 export const d3ClaimsPerSlide: number[] = d3Slides.map((s) => collectClaims(s).size);
 export const d3ClaimsInDeck: number = collectClaims(d3Slides).size;

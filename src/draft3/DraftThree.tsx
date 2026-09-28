@@ -1,12 +1,14 @@
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
 import { assets } from "../content/assets";
-import { solutionSlide, ui } from "../content/slides";
+import { solutionSlide } from "../content/slides";
 import { Claim } from "../components/Claim";
 import { DeckShell } from "../components/DeckShell";
 import { useDeck } from "../components/DeckContext";
 import { AuditHint } from "../components/SlideFrame";
 import { VideoPanel } from "../components/VideoPanel";
 import { useReducedMotion } from "../hooks/useReducedMotion";
+import { build, Frame } from "./Frame";
+import { SlidesSixToTen } from "./SlidesSixToTen";
 import {
   d3ClaimsInDeck,
   d3ClaimsPerSlide,
@@ -16,7 +18,6 @@ import {
   d3Solution,
   d3Title,
   d3Value,
-  type D3Slide,
 } from "./content";
 import "./draft3.css";
 
@@ -29,50 +30,10 @@ export function DraftThree() {
       <ValueSlide />
       <SolutionSlide />
       <ModelSlide />
+      <SlidesSixToTen />
     </DeckShell>
   );
 }
-
-/* ------------------------------------------------------------------ */
-
-function Frame({ slide, index, className = "", children }: { slide: D3Slide; index: number; className?: string; children: ReactNode }) {
-  const { active, audit, go, claimsPerSlide, claimsInDeck } = useDeck();
-  const isActive = active === index;
-  const ref = useRef<HTMLElement>(null);
-  useEffect(() => {
-    if (ref.current) ref.current.inert = !isActive;
-  }, [isActive]);
-
-  return (
-    <section
-      ref={ref}
-      className={`slide d3-slide d3-slide--${slide.n} ground-${slide.ground} ${className}`}
-      aria-label={slide.title}
-      aria-hidden={!isActive}
-      data-slide={slide.n}
-    >
-      {children}
-      <footer className="d3-foot">
-        {audit && <span className="d3-foot__audit">{ui.auditCount(claimsPerSlide[index], claimsInDeck)}</span>}
-        <nav className="d3-dots" aria-label="Slides">
-          {claimsPerSlide.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              className={`d3-dot${i === index ? " is-current" : ""}`}
-              aria-label={ui.slideOf(i + 1, claimsPerSlide.length)}
-              aria-current={i === index ? "step" : undefined}
-              onClick={() => go(i)}
-            />
-          ))}
-        </nav>
-      </footer>
-    </section>
-  );
-}
-
-/** Builds in with the slide, like a keynote build. `step` staggers the order. */
-const build = (step: number): CSSProperties => ({ ["--step" as string]: step });
 
 /* ------------------------------------------------------------------ */
 

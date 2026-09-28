@@ -51,6 +51,67 @@ export const claims = {
     claim: "Cannabis iron spend",
     proof: "Not quantified. Requires a licensed producer conversation",
   },
+  // Slides 6 to 10 (Kawasaki brief).
+  beachhead: {
+    claim: "15 to 40 Maritime operations are the beachhead",
+    proof: "Name and call every operation on the list; the outreach log counts each conversation",
+  },
+  "trial-path": {
+    claim: "Free trial, then letter of intent, then paid orders",
+    proof: "A signed spring 2027 trial host, then a first letter of intent (Q3 2027 target)",
+  },
+  "warm-entry": {
+    claim: "Warm introductions open the door",
+    proof: "Introductions requested from NB DAAF, Ignite Fredericton, Planet Hatch and UNB, logged per call",
+  },
+  "dealers-later": {
+    claim: "Dealers only after a proven trial and CFIA registration",
+    proof: "Dealer calls once trial results and CFIA status are in hand",
+  },
+  "scale-up": {
+    claim: "Ontario floriculture and cannabis are the scale-up paths",
+    proof: "Dealer calls and IBISWorld data at the UNB library size iron spend in each",
+  },
+  "edta-ceiling": {
+    claim: `Commodity Fe-${CHELATE.agent} loses effect above media pH of about 6.0 to 6.5`,
+    proof: `UNB pH-response test with recorded pH at every step, run alongside a commodity Fe-${CHELATE.agent}`,
+  },
+  "dtpa-price": {
+    claim: `Sprint 330 is priced above Fe-${CHELATE.agent}`,
+    proof: "Maritime dealer quotes, compared per gram of iron",
+  },
+  "eddha-cost": {
+    claim: "Sprint 138 is expensive for container media",
+    proof: "Maritime dealer quotes, compared per gram of iron",
+  },
+  injectors: {
+    claim: "Growers already own acid injectors",
+    proof: "Discovery calls",
+  },
+  "gross-margin": {
+    claim: "CAD 15.00 gross margin per litre (60 percent)",
+    proof: "A discovery-call price and a measured Canadian batch cost replace both inputs",
+  },
+  "three-year": {
+    claim: "Customers, litres and revenue for Years 1 to 3",
+    proof: "Discovery calls replace litres per customer; customer counts are a founders' planning assumption",
+  },
+  "import-gate": {
+    claim: "Import cleared with CFIA, CBSA and Global Affairs Canada",
+    proof: "Calls to CFIA, CBSA and Global Affairs Canada this week",
+  },
+  "pivot-gate": {
+    claim: "The pH-response test decides the pivot in Q1 2027",
+    proof: "Dr. Arp confirms space and start date once the sample arrives",
+  },
+  "trial-gate": {
+    claim: "Trial host signed and CFIA application filed in Q2 2027",
+    proof: "A signed trial host, and the CFIA pathway call",
+  },
+  "loi-gate": {
+    claim: "Letter of intent in hand and CFIA status known by Q3 2027",
+    proof: "The spring trial results",
+  },
 } as const;
 
 export type ClaimId = keyof typeof claims;

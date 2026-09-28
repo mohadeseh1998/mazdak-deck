@@ -4,7 +4,7 @@ A five-slide, keyboard-driven presentation built from `mazdak-pitch-deck-build-b
 
 ## Three drafts
 
-- **Draft 3 (default)**, `http://localhost:5173`: keynote style. A black stage, one thought per slide, a handful of words each, and gentle build-ins. Everything cut is kept in the presenter notes (press N). Copy lives in `src/draft3/content.ts`.
+- **Draft 3 (default)**, `http://localhost:5173`: keynote style. A black stage, one thought per slide, a handful of words each, and gentle build-ins. Everything cut is kept in the presenter notes (press N). Ten slides: 1 to 5 in `src/draft3/content.ts`, 6 to 10 (from `Mazdak_Pitch_Deck_Build_Brief_Slides_6-10.md`) in `src/draft3/content6to10.ts`. Slides 6 to 10 add two more tags: evidence (green, hover for the source) and placeholder (grey, hover for what is missing and where it comes from). Team photos appear automatically if `assets/team-zamani.jpg`, `assets/team-kalateh.jpg` or `assets/team-arp.jpg` is added.
 - **Draft 2**, `http://localhost:5173/?draft=2`: the streamlined revision. One idea per slide, a single clean sans-serif, generous space, a soft crossfade. Every talking point cut from a slide is kept in the presenter notes (press N). Copy lives in `src/draft2/content.ts`.
 - **Draft 1**, `http://localhost:5173/?draft=1`: the full brief, built as specified.
 

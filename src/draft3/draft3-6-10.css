@@ -1,0 +1,661 @@
+/* Draft 3, slides 6 to 10. Same stage, type and tags as slides 1 to 5;
+   these slides carry more content, so they top-align under the headline. */
+
+.d3-page {
+  position: absolute;
+  inset: 0 0 64px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 72px 128px 0;
+}
+
+.d3-page__title {
+  max-width: 1240px;
+  font-family: var(--d3-font);
+  font-size: 56px;
+  line-height: 1.06;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  text-align: center;
+  text-wrap: balance;
+  color: var(--fg);
+}
+
+.d3-kicker {
+  margin-bottom: 12px;
+  font-size: 15px;
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--fg-muted);
+}
+
+.d3-body {
+  font-size: 21px;
+  line-height: 1.45;
+  color: var(--fg);
+}
+
+/* ---- Evidence and placeholder tags, in the same idiom as assumptions ---- */
+
+.d3 .tagged {
+  cursor: help;
+  white-space: nowrap;
+}
+
+.d3 .tag--evidence {
+  color: #7fd19b; /* 10.6:1 on black */
+}
+
+.d3 .tag--placeholder {
+  color: #aeaeb2;
+}
+
+.d3 .tag--placeholder::before {
+  background: transparent !important;
+  box-shadow: inset 0 0 0 1.5px currentColor;
+}
+
+.d3.is-audit .tagged--placeholder .claim__tag {
+  color: #f5f5f7;
+}
+
+/* ================================================================ */
+/* 6. Go-to-market: a four-rung ladder and three short blocks       */
+/* ================================================================ */
+
+.d3-ladder {
+  width: 100%;
+  margin-top: 56px;
+}
+
+.d3-ladder__label {
+  margin-bottom: 26px;
+  font-size: 17px;
+  font-weight: 500;
+  text-align: center;
+  color: var(--fg-muted);
+}
+
+.d3-ladder__track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding-top: 8px;
+}
+
+/* the rail joining the four rungs */
+.d3-ladder__track::before {
+  content: "";
+  position: absolute;
+  top: 29px;
+  left: 12.5%;
+  right: 12.5%;
+  height: 1px;
+  background: #3a3a3c;
+}
+
+.d3-ladder__here {
+  position: absolute;
+  top: -26px;
+  left: calc(12.5% - 138px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--fg);
+  white-space: nowrap;
+}
+
+.d3-ladder__here-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f5f5f7;
+  box-shadow: 0 0 0 6px rgb(245 245 247 / 0.15);
+}
+
+.d3-ladder__step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 18px;
+  text-align: center;
+}
+
+.d3-ladder__node {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #000;
+  border: 1px solid #48484a;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fg);
+  z-index: 1;
+}
+
+.d3-ladder__name {
+  margin-top: 16px;
+  font-size: 26px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+
+.d3-ladder__sub {
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--fg-muted);
+}
+
+.d3-ladder__sub .claim__text {
+  color: var(--fg-muted);
+}
+
+.d3-trio {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 64px;
+  width: 100%;
+  margin-top: 72px;
+  padding-top: 36px;
+  border-top: 1px solid var(--rule);
+}
+
+/* ================================================================ */
+/* 7. Competition: one quiet table and the position line            */
+/* ================================================================ */
+
+.d3-table {
+  width: 100%;
+  margin-top: 44px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.d3-table thead th {
+  padding: 0 24px 14px 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--fg-muted);
+  border-bottom: 1px solid #3a3a3c;
+}
+
+.d3-table tbody th,
+.d3-table td {
+  padding: 17px 28px 17px 0;
+  vertical-align: top;
+  font-size: 19px;
+  line-height: 1.4;
+  border-bottom: 1px solid #1f1f21;
+}
+
+.d3-table tbody th {
+  width: 30%;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.d3-table td {
+  width: 35%;
+  color: #d1d1d6;
+}
+
+.d3-table .tagged {
+  white-space: normal;
+}
+
+.d3-position {
+  max-width: 1150px;
+  margin-top: 36px;
+  font-size: 21px;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--fg);
+}
+
+/* ================================================================ */
+/* 8. Team: three people and one empty frame                        */
+/* ================================================================ */
+
+.d3-team {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 40px;
+  width: 100%;
+  margin-top: 60px;
+}
+
+.d3-person {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.d3-person__face {
+  display: grid;
+  place-items: center;
+  width: 112px;
+  height: 112px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: linear-gradient(160deg, #2c2c2e, #1c1c1e);
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #d1d1d6;
+}
+
+.d3-person__face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.d3-person__face--empty {
+  background: transparent;
+  border: 1.5px dashed #636366;
+  color: #8e8e93;
+  font-weight: 300;
+  font-size: 44px;
+}
+
+.d3-person__name {
+  margin-top: 26px;
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+
+.d3-person__role {
+  margin-top: 6px;
+  min-height: 46px;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--fg-muted);
+}
+
+.d3-person__proof,
+.d3-person__hire {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+  font-size: 17px;
+  line-height: 1.5;
+  color: #d1d1d6;
+}
+
+.d3-person__proof .tagged {
+  white-space: normal;
+}
+
+.d3-person__hire {
+  font-size: 21px;
+  line-height: 1.4;
+  color: var(--fg);
+}
+
+.d3-person--hire .d3-person__name {
+  color: var(--us);
+}
+
+/* ================================================================ */
+/* 9. Financials: unit economics, then revenue against the ceiling  */
+/* ================================================================ */
+
+.d3-fin {
+  display: grid;
+  grid-template-columns: 500px 780px;
+  column-gap: 64px;
+  justify-content: center;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.d3-units {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  column-gap: 26px;
+  row-gap: 18px;
+  align-items: baseline;
+}
+
+.d3-units__head {
+  font-size: 14px;
+  white-space: nowrap;
+  color: var(--fg-muted);
+}
+
+.d3-units__label {
+  font-size: 17px;
+  color: var(--fg-muted);
+}
+
+.d3-units__big {
+  white-space: nowrap;
+  font-size: 28px;
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.d3-units__big .claim__tag {
+  display: block;
+  margin-top: 8px;
+  vertical-align: 0;
+}
+
+.d3-units__small {
+  font-size: 19px;
+  color: #d1d1d6;
+  font-variant-numeric: tabular-nums;
+}
+
+.d3-fin__years .claim__note {
+  margin-top: 10px !important;
+}
+
+.d3-chart {
+  position: relative;
+}
+
+.d3-chart svg {
+  display: block;
+  overflow: visible;
+}
+
+.d3-chart__ceiling {
+  stroke: #f5f5f7;
+  stroke-opacity: 0.55;
+  stroke-width: 1;
+  stroke-dasharray: 4 5;
+}
+
+.d3-chart__base {
+  stroke: #3a3a3c;
+}
+
+.d3-chart__bar {
+  fill: var(--chlorosis);
+  fill-opacity: 0.85;
+}
+
+.d3-chart__ceiling-label,
+.d3-chart__value,
+.d3-chart__year {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 15px;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.d3-chart__ceiling-label {
+  color: var(--fg-muted);
+}
+
+.d3-chart__value {
+  transform: translateX(-50%);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.d3-chart__year {
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 13px;
+  color: var(--fg-muted);
+}
+
+.d3-chart__year strong {
+  font-size: 16px;
+  color: var(--fg);
+}
+
+.d3-years {
+  width: 780px;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.d3-years th,
+.d3-years td {
+  padding: 5px 0;
+  border-top: 1px solid #1f1f21;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.d3-years th {
+  width: 300px;
+  text-align: left;
+  font-weight: 400;
+  color: var(--fg-muted);
+}
+
+.d3-years td {
+  width: 160px;
+  text-align: center;
+  color: var(--fg);
+}
+
+.d3-years .tagged {
+  white-space: normal;
+}
+
+.d3-honest {
+  max-width: 1100px;
+  margin-top: 22px;
+  padding-left: 16px;
+  border-left: 2px solid var(--chlorosis);
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--fg);
+}
+
+/* ================================================================ */
+/* 10. Status and ask: today, four quarters with a fork, one ask    */
+/* ================================================================ */
+
+.d3-today {
+  max-width: 1200px;
+  margin-top: 30px;
+  font-size: 19px;
+  line-height: 1.5;
+  text-align: center;
+  color: #d1d1d6;
+}
+
+.d3-today strong {
+  margin-right: 6px;
+  color: var(--fg);
+}
+
+.d3-quarters {
+  width: 100%;
+  margin-top: 36px;
+}
+
+.d3-quarters__label {
+  margin-bottom: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--fg-muted);
+}
+
+.d3-quarters__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 40px;
+}
+
+.d3-quarters__grid::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #3a3a3c;
+}
+
+.d3-quarter {
+  position: relative;
+  padding-top: 30px;
+}
+
+.d3-quarter__node {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #f5f5f7;
+}
+
+.d3-quarter--pivot .d3-quarter__node {
+  background: var(--chlorosis);
+}
+
+.d3-quarter__node svg {
+  position: absolute;
+  left: 18px;
+  top: -12px;
+}
+
+.d3-quarter__node path {
+  fill: none;
+  stroke: var(--chlorosis);
+  stroke-width: 2;
+}
+
+.d3-quarter__q {
+  font-size: 24px;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+
+.d3-quarter__q span {
+  margin-left: 6px;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--fg-muted);
+}
+
+.d3-quarter__milestone {
+  margin-top: 10px;
+  min-height: 118px;
+  font-size: 16px;
+  line-height: 1.45;
+  color: #d1d1d6;
+}
+
+.d3-quarter__gate {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--fg);
+}
+
+.d3-quarter__gate-label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg-muted);
+}
+
+.d3-quarter--pivot .d3-quarter__gate {
+  border-top-color: rgb(232 195 58 / 0.6);
+}
+
+/* The one call to action: rust means the company. */
+.d3-ask {
+  width: 100%;
+  margin-top: 30px;
+  padding: 22px 30px;
+  border: 1px solid rgb(201 113 63 / 0.55);
+  border-radius: 18px;
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  column-gap: 24px;
+  align-items: baseline;
+}
+
+.d3-ask__label {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--us);
+}
+
+.d3-ask__text {
+  font-size: 21px;
+  line-height: 1.45;
+  color: var(--fg);
+}
+
+/* ================================================================ */
+/* Print                                                            */
+/* ================================================================ */
+
+@media print {
+  .d3 .tag--evidence {
+    color: var(--vein);
+  }
+
+  .d3 .tag--placeholder {
+    color: #6e6e73;
+  }
+
+  .d3-table td,
+  .d3-person__proof,
+  .d3-today,
+  .d3-quarter__milestone,
+  .d3-units__small {
+    color: #1d1d1f;
+  }
+
+  .d3-ladder__node {
+    background: #fff;
+  }
+
+  .d3-ladder__here-dot,
+  .d3-quarter__node {
+    background: #1d1d1f;
+  }
+
+  .d3-person__face {
+    background: #e5e5ea;
+    color: #1d1d1f;
+  }
+
+  .d3-chart__ceiling {
+    stroke: #1d1d1f;
+  }
+}
+
+/* Slides 6 to 10 carry longer speaker notes; let the panel scroll. */
+.d3 .notes {
+  overflow: auto;
+}

@@ -168,7 +168,7 @@ export function DeckShell({ slides, claimsPerSlide, claimsInDeck, className = ""
             </button>
           </div>
 
-          {notes && <PresenterNotes note={current.notes} n={current.n} detail={current.detail} />}
+          {notes && <PresenterNotes note={current.notes} n={current.n} total={SLIDE_COUNT} detail={current.detail} />}
           {sourcesOpen && <SourcesOverlay />}
         </Stage>
 

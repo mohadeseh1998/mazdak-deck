@@ -1,18 +1,19 @@
-import { SLIDE_COUNT, ui } from "../content/slides";
+import { ui } from "../content/slides";
 
 interface Props {
   note: string;
   n: number;
+  total: number;
   /** Talking points cut from the slide, kept here so nothing is lost. */
   detail?: readonly string[];
 }
 
 /** Key N: the speaking note for the current slide, over the lower third. */
-export function PresenterNotes({ note, n, detail }: Props) {
+export function PresenterNotes({ note, n, total, detail }: Props) {
   return (
     <aside className={`notes${detail?.length ? " notes--detail" : ""}`} aria-label={ui.notesHeading}>
       <p className="notes__heading">
-        {ui.notesHeading}, {ui.slideOf(n, SLIDE_COUNT).toLowerCase()}
+        {ui.notesHeading}, {ui.slideOf(n, total).toLowerCase()}
       </p>
       <p className="notes__text">{note}</p>
       {detail && detail.length > 0 && (
