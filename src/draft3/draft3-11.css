@@ -75,16 +75,19 @@
   flex: none;
 }
 
+/* Top row: two photos at 300 px. */
 .d3-award__medals .d3-shot--natural {
-  height: 250px;
+  height: 300px;
 }
 
 .d3-award__thumbs {
   margin-top: 14px;
 }
 
+/* Bottom row: four images at their natural shapes. 160 px is the largest
+   height at which all four fit the card's width without cropping. */
 .d3-award__thumbs .d3-shot--natural {
-  height: 200px;
+  height: 160px;
 }
 
 .d3-shot {
@@ -118,7 +121,7 @@
 }
 
 .d3-award__medals .d3-shot--natural:has(figcaption) img {
-  height: 250px;
+  height: 300px;
 }
 
 .d3-award__caption {

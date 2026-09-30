@@ -33,9 +33,9 @@ export const d3Recognition = {
         caption: "Mohadeseh Zamani with the Gold Medal",
       },
       { file: "ican_gold_medal_1.jpg", alt: "iCAN 2026 Gold Medal resting on the certificate of award" },
-      { file: "ican_gold_medal_2.jpg", alt: "iCAN 2026 Gold Medal and ribbon on the certificate of award" },
     ] as RecognitionImage[],
     thumbs: [
+      { file: "ican_gold_medal_2.jpg", alt: "iCAN 2026 Gold Medal and ribbon on the certificate of award" },
       { file: "ican_certificate_of_excellence.jpg", alt: "iCAN 2026 certificate of excellence" },
       { file: "ican_wiipa_special_award.jpg", alt: "WIIPA special award, iCAN 2026" },
       { file: "ican_fir_special_award.jpg", alt: "Romanian Inventors Forum special award, iCAN 2026" },
