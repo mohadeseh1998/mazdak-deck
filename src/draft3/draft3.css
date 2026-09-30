@@ -487,22 +487,12 @@
   fill-opacity: 0.85;
 }
 
-/* "Our claim" is tagged evidence, so its bar uses the evidence treatment:
-   solid, not dashed, and green rather than yellow. */
+/* "Our claim": a solid yellow bar with a solid outline (deck_fixes_2.md). */
 .d3-bar-claim {
-  fill: none;
-  stroke: #7fd19b;
+  fill: var(--chlorosis);
+  fill-opacity: 0.85;
+  stroke: var(--chlorosis);
   stroke-width: 1.5;
-}
-
-.d3-fade-a {
-  stop-color: #7fd19b;
-  stop-opacity: 0.75;
-}
-
-.d3-fade-b {
-  stop-color: #7fd19b;
-  stop-opacity: 0;
 }
 
 .d3-axis {

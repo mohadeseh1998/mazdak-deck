@@ -4,19 +4,28 @@ import { d3Recognition, type RecognitionImage } from "./content11";
 import "./draft3-11.css";
 
 /**
- * One recognition image. Images live in assets/recognition_images/. Until a
+ * How an image fills its slot:
+ * - natural: fixed row height, width from the image's own shape, nothing cropped
+ * - contain: the whole image inside a fixed box, on the card background
+ * - cover: fills the box; used only for the press screenshots, anchored at the top
+ */
+type Fit = "natural" | "contain" | "cover";
+
+/**
+ * One recognition image, from assets/ or assets/recognition_images/. Until a
  * file is added, a quiet frame holds its place so the layout never shifts.
  */
-function Shot({ image, className = "" }: { image: RecognitionImage; className?: string }) {
+function Shot({ image, fit, className = "" }: { image: RecognitionImage; fit: Fit; className?: string }) {
   const src = assetNamed(image.file);
   return (
-    <div className={`d3-shot ${className}${src ? "" : " d3-shot--missing"}`}>
+    <figure className={`d3-shot d3-shot--${fit} ${className}${src ? "" : " d3-shot--missing"}`}>
       {src ? (
         <img src={src} alt={image.alt} style={image.top ? { objectPosition: "center top" } : undefined} />
       ) : (
         <span className="d3-shot__missing">{image.file}</span>
       )}
-    </div>
+      {image.caption && <figcaption className="d3-award__caption">{image.caption}</figcaption>}
+    </figure>
   );
 }
 
@@ -33,17 +42,12 @@ export function Slide11() {
           <article className="d3-award d3-award--tall d3-in" style={build(1)}>
             <div className="d3-award__medals">
               {c.ican.medals.map((m) => (
-                <Shot key={m.file} image={m} />
-              ))}
-              {c.ican.medals.map((m) => (
-                <span key={m.file} className="d3-award__caption">
-                  {m.caption}
-                </span>
+                <Shot key={m.file} image={m} fit="natural" />
               ))}
             </div>
             <div className="d3-award__thumbs">
               {c.ican.thumbs.map((t) => (
-                <Shot key={t.file} image={t} />
+                <Shot key={t.file} image={t} fit="natural" />
               ))}
             </div>
             <h3 className="d3-award__heading">{c.ican.heading}</h3>
@@ -59,7 +63,7 @@ export function Slide11() {
                 {card.images.length > 0 && (
                   <div className={`d3-award__images d3-award__images--${card.images.length}`}>
                     {card.images.map((im) => (
-                      <Shot key={im.file} image={im} />
+                      <Shot key={im.file} image={im} fit={(im as RecognitionImage).top ? "cover" : "contain"} />
                     ))}
                   </div>
                 )}

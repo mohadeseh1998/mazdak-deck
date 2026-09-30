@@ -184,18 +184,24 @@ const TICKS = [5, 6, 6.5, 7, 8];
 function PhScale({ copy, active }: { copy: (typeof d3Value)["scale"]; active: boolean }) {
   const reduced = useReducedMotion();
   const [drawn, setDrawn] = useState(reduced ? 1 : 0);
-  const started = useRef(false);
+  // Marked only once the bar has fully grown. A cancelled run (for example
+  // React mounting twice in development) restarts instead of leaving it empty.
+  const done = useRef(false);
 
   useEffect(() => {
-    if (!active || started.current) return;
-    started.current = true;
-    if (reduced) return setDrawn(1);
+    if (!active || done.current) return;
+    if (reduced) {
+      done.current = true;
+      setDrawn(1);
+      return;
+    }
     let raf = 0;
     const t0 = performance.now() + 900;
     const tick = (now: number) => {
       const p = Math.min(1, Math.max(0, (now - t0) / 1300));
       setDrawn(1 - Math.pow(1 - p, 3));
       if (p < 1) raf = requestAnimationFrame(tick);
+      else done.current = true;
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
@@ -213,10 +219,6 @@ function PhScale({ copy, active }: { copy: (typeof d3Value)["scale"]; active: bo
     <figure className="d3-scale" style={{ width: W, height: H }}>
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={copy.title}>
         <defs>
-          <linearGradient id="d3-fade" x1="0" x2="1">
-            <stop offset="0" className="d3-fade-a" />
-            <stop offset="1" className="d3-fade-b" />
-          </linearGradient>
           <clipPath id="d3-draw">
             <rect x={px(6) - 4} y={0} width={(claimW + 8) * drawn} height={H} />
           </clipPath>
@@ -228,8 +230,8 @@ function PhScale({ copy, active }: { copy: (typeof d3Value)["scale"]; active: bo
         <rect className="d3-bar-std" x={0} y={Y_STD} width={px(6.5)} height={BAR} rx={BAR / 2} />
 
         <g clipPath="url(#d3-draw)">
-          <rect x={px(6)} y={Y_CLAIM} width={claimW} height={BAR} rx={BAR / 2} fill="url(#d3-fade)" />
-          <rect className="d3-bar-claim" x={px(6) + 0.75} y={Y_CLAIM + 0.75} width={claimW - 1.5} height={BAR - 1.5} rx={BAR / 2} />
+          {/* Same height and rounded ends as the standard bar; grows from pH 6 to 8. */}
+          <rect className="d3-bar-claim" x={px(6) + 0.75} y={Y_CLAIM + 0.75} width={claimW - 1.5} height={BAR - 1.5} rx={(BAR - 1.5) / 2} />
         </g>
 
         <line className="d3-axis" x1={0} x2={W} y1={Y_AXIS} y2={Y_AXIS} />

@@ -1,19 +1,21 @@
 /* Draft 3, slide 11: recognition cards on the same black stage. */
 
+/* The iCAN card takes about half the content width so its images can be
+   large without cropping; the two-by-two grid narrows to fit. */
 .d3-awards {
   display: grid;
-  grid-template-columns: 520px minmax(0, 1fr);
-  column-gap: 28px;
+  grid-template-columns: 660px minmax(0, 1fr);
+  column-gap: 24px;
   width: 100%;
-  height: 620px;
-  margin-top: 44px;
+  height: 650px;
+  margin-top: 36px;
 }
 
 .d3-awards__grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, 1fr));
-  gap: 28px;
+  gap: 24px;
   min-height: 0;
 }
 
@@ -23,7 +25,7 @@
   min-width: 0;
   min-height: 0;
   overflow: hidden;
-  padding: 20px;
+  padding: 18px;
   border: 1px solid rgb(255 255 255 / 0.08);
   border-radius: 20px;
   background: rgb(255 255 255 / 0.045);
@@ -38,7 +40,7 @@
 /* Headings sit at the foot of every card, so they line up across a row. */
 .d3-award__heading {
   margin-top: auto;
-  padding-top: 16px;
+  padding-top: 14px;
   font-size: 20px;
   line-height: 1.25;
   font-weight: 600;
@@ -57,37 +59,81 @@
   color: var(--fg-muted);
 }
 
-/* Three medal photos side by side; the caption row sits under them, so the
-   photos stay the same height whether or not they carry a caption. */
-.d3-award__medals {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: minmax(0, 1fr) auto;
-  column-gap: 10px;
-  row-gap: 6px;
-  height: 320px;
+.d3-award--tall .d3-award__text {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* ---- iCAN rows: fixed height per row, each image at its own shape ---- */
+
+.d3-award__medals,
+.d3-award__thumbs {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
   flex: none;
 }
 
+.d3-award__medals .d3-shot--natural {
+  height: 250px;
+}
+
+.d3-award__thumbs {
+  margin-top: 14px;
+}
+
+.d3-award__thumbs .d3-shot--natural {
+  height: 200px;
+}
+
+.d3-shot {
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+}
+
+.d3-shot img {
+  display: block;
+  border-radius: 10px;
+}
+
+/* Natural: the image keeps its aspect ratio; the caption wraps to its width. */
+.d3-shot--natural {
+  display: flex;
+  flex-direction: column;
+  width: min-content;
+}
+
+.d3-shot--natural img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+/* The captioned photo keeps the row height for the image and hangs the
+   caption beneath it, so all three photos stay the same height. */
+.d3-award__medals .d3-shot--natural:has(figcaption) {
+  height: auto;
+}
+
+.d3-award__medals .d3-shot--natural:has(figcaption) img {
+  height: 250px;
+}
+
 .d3-award__caption {
+  margin-top: 6px;
   font-size: 12px;
   line-height: 1.3;
   color: var(--fg-muted);
 }
 
-.d3-award__thumbs {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  height: 110px;
-  margin-top: 12px;
-  flex: none;
-}
+/* ---- Right-hand cards ---- */
 
 .d3-award__images {
   display: grid;
   gap: 10px;
-  height: 160px;
+  height: 190px;
   flex: none;
 }
 
@@ -95,29 +141,38 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.d3-shot {
-  min-width: 0;
-  min-height: 0;
+.d3-shot--contain,
+.d3-shot--cover {
+  height: 100%;
   overflow: hidden;
-  border-radius: 12px;
-  background: #1c1c1e;
+  border-radius: 10px;
 }
 
-.d3-shot img {
-  display: block;
+.d3-shot--contain img,
+.d3-shot--cover img {
   width: 100%;
   height: 100%;
+  border-radius: 0;
+}
+
+/* Contain: the whole photo, nobody cropped, on the card's own background. */
+.d3-shot--contain img {
+  object-fit: contain;
+}
+
+.d3-shot--cover img {
   object-fit: cover;
-  object-position: center;
 }
 
 /* A file not added yet: a quiet frame naming it, so nothing shifts later. */
 .d3-shot--missing {
   display: grid;
   place-items: center;
+  min-width: 140px;
+  height: 100%;
   padding: 8px;
   border: 1px dashed #48484a;
-  background: transparent;
+  border-radius: 10px;
 }
 
 .d3-shot__missing {
@@ -132,9 +187,5 @@
   .d3-award {
     background: transparent;
     border-color: #d1d1d6;
-  }
-
-  .d3-shot {
-    background: #f2f2f7;
   }
 }
