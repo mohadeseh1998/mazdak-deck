@@ -12,7 +12,7 @@ function Shot({ image, className = "" }: { image: RecognitionImage; className?: 
   return (
     <div className={`d3-shot ${className}${src ? "" : " d3-shot--missing"}`}>
       {src ? (
-        <img src={src} alt={image.alt} style={image.top ? { objectPosition: "top" } : undefined} />
+        <img src={src} alt={image.alt} style={image.top ? { objectPosition: "center top" } : undefined} />
       ) : (
         <span className="d3-shot__missing">{image.file}</span>
       )}
@@ -34,6 +34,11 @@ export function Slide11() {
             <div className="d3-award__medals">
               {c.ican.medals.map((m) => (
                 <Shot key={m.file} image={m} />
+              ))}
+              {c.ican.medals.map((m) => (
+                <span key={m.file} className="d3-award__caption">
+                  {m.caption}
+                </span>
               ))}
             </div>
             <div className="d3-award__thumbs">

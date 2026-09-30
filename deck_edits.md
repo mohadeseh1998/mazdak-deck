@@ -269,7 +269,7 @@ Image files are in the folder `recognition_images` next to this md file. Copy th
 ### Card 1 (left, tall): iCAN 2026
 - Heading: "iCAN 2026"
 - Description: "Gold Medal plus two international special awards (WIIPA and Romanian Inventors Forum) at the 11th International Invention Innovation Competition in Canada, Toronto, 29 August 2026."
-- Main images: two gold medal photos side by side, one for each founder (both received the Gold Medal): `ican_gold_medal_1.jpg` and `ican_gold_medal_2.jpg`.
+- Main images: three photos side by side, all showing the Gold Medal (both founders received one): `ican_medal_mohadeseh.jpg` (Mohadeseh holding her Gold Medal, a photo of her, use `object-position: center top` so her face and the medal stay visible), then `ican_gold_medal_1.jpg` and `ican_gold_medal_2.jpg` (the medal on the certificate). Add a small gray caption under the first photo: "Mohadeseh Zamani with the Gold Medal".
 - Below them, a row of three small thumbnails: `ican_certificate_of_excellence.jpg`, `ican_wiipa_special_award.jpg`, `ican_fir_special_award.jpg`.
 
 ### Card 2: BMO Apex 2025
