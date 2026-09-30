@@ -37,7 +37,7 @@ export const claims = {
   },
   "price-25": {
     claim: "CAD 25 per litre selling price",
-    proof: "Quoted Maritime dealer prices from Halifax Seed, Plant Products, Cavendish Agri Services",
+    proof: "Quoted dealer prices from Halifax Seed, Plant Products, Cavendish Agri Services",
   },
   channel: {
     claim: "Direct then dealers, and the two purchase gates",
@@ -93,16 +93,16 @@ export const claims = {
     proof: "A discovery-call price and a measured Canadian batch cost replace both inputs",
   },
   "three-year": {
-    claim: "Customers, litres and revenue for Years 1 to 3",
-    proof: "Discovery calls replace litres per customer; customer counts are a founders' planning assumption",
+    claim: "Plan A figures for Years 1 to 3",
+    proof: "A discovery-call price and a measured Canadian batch cost replace the modelled inputs",
   },
   "import-gate": {
-    claim: "Import cleared with CFIA, CBSA and Global Affairs Canada",
-    proof: "Calls to CFIA, CBSA and Global Affairs Canada this week",
+    claim: "New sample produced in Canada and validated",
+    proof: "An independent assay of the new Canadian sample",
   },
   "pivot-gate": {
-    claim: "The pH-response test decides the pivot in Q1 2027",
-    proof: "Dr. Arp confirms space and start date once the sample arrives",
+    claim: "pH-response result confirmed up to pH 8; CFIA route and fees known",
+    proof: "UNB pH-response test with recorded pH at every step, and the CFIA pathway call",
   },
   "trial-gate": {
     claim: "Trial host signed and CFIA application filed in Q2 2027",

@@ -76,7 +76,7 @@ export const d3Competition = {
   n: 7,
   title: "Competition",
   ground: "ink",
-  headline: `Our real competitor is cheap Fe-${agent}, and our real substitute is acid`,
+  headline: `Our competitors are every type of iron fertilizer, from ${agent} to EDDHA.`,
   columns: ["Option", "Strength", "Weakness"],
   rows: [
     {
@@ -96,8 +96,10 @@ export const d3Competition = {
     },
     {
       option: "Acid injection and acidifying fertiliser",
-      strength: [a("injectors", "Growers already own injectors")] as Line,
-      weakness: ["Constant management; a corrective drench still needed once chlorosis appears"] as Line,
+      strength: ["Cheap"] as Line,
+      weakness: [
+        "Acid can only be lowered to a point. Below a safe pH range it harms the plants, so it cannot be pushed far enough.",
+      ] as Line,
     },
     {
       option: "Doing nothing, culling",
@@ -107,10 +109,7 @@ export const d3Competition = {
   ],
   position: [
     { b: "Our position: " },
-    `Fe-${agent} chemistry with field evidence of working in alkaline soil, applied to the root zone `,
-    ev("Iranian field trials; root-zone application confirmed by Dr. Kalateh, 23 September 2026"),
-    " ",
-    a("ph-extension", "Whether it works above pH 6.0 in container media is not yet measured."),
+    `simple ${agent} chelation, made with our novel process, gives a high quality product that is far more affordable and accessible for farmers and greenhouse growers of every size. Through our Mitacs Accelerate Entrepreneurship project, we will also prove that the fertilizer stays in solution, without precipitating, up to pH 8.`,
   ] as Line,
   notes:
     "Compare per gram of iron, never per litre, and say plainly that no cost advantage is claimed until the dealer quotes are in.",
@@ -126,13 +125,13 @@ export const d3Team = {
   n: 8,
   title: "Team",
   ground: "ink",
-  headline: "Chemistry, customer, and a lab to prove it in Canada",
+  headline: "Chemistry and customer: our team",
   people: [
     {
       initials: "MZ",
-      photo: "team-zamani.jpg",
+      photo: "Mohadeseh_phot.jpg",
       name: "Mohadeseh Zamani",
-      role: "Co-founder, Customer, Regulatory and Ecosystem",
+      role: "Co-founder, CMO, Customer, Regulatory and Ecosystem",
       proof: [
         "Runs the Canadian company end to end: incorporated in NB, GST/HST registered, UNB lab access and test supervision secured, Mitacs application at final stage ",
         ev("Data Room 01 and 05"),
@@ -142,31 +141,17 @@ export const d3Team = {
     },
     {
       initials: "AK",
-      photo: "team-kalateh.jpg",
+      photo: "Ali_Kalateh_photo.jpg",
       name: "Dr. Ali Kalateh",
-      role: "Co-founder, Chemistry and Process",
+      role: "Co-founder, CEO, Chemistry and Process",
       proof: [
-        "Inventor of the microwave-UV chelation route. ",
-        a("process-time", "Main reaction in about 20 minutes versus 12 hours or more in his own pilot production."),
+        "Inventor of the innovative process. Main reaction in about 20 minutes versus 12 hours or more in his own pilot production. ",
+        ev(""),
         " Product assays at 65,222 mg/L iron ",
         ev("SPECTRO assay, 11 May 2023"),
       ] as Line,
     },
-    {
-      initials: "PA",
-      photo: "team-arp.jpg",
-      name: "Dr. Paul Arp",
-      role: "UNB, Research Supervisor (advisor, not an employee)",
-      proof: [
-        "Approved UNB lab access and agreed to supervise the controlled pH-response test ",
-        ev("Conversation, 2 September 2026"),
-        " Supervisor on our Mitacs application (pending). ",
-        ph("arp-details"),
-      ] as Line,
-    },
   ],
-  hireLabel: "The gap we are hiring for",
-  hire: "An in-Canada process chemist to run synthesis while Dr. Kalateh is remote.",
   notes:
     "Why this gap first: the product, the process knowledge and the chemist are all outside Canada today. A trade secret held by one person on another continent is a risk investors will price.",
   detail: [
@@ -182,7 +167,7 @@ export const d3Financials = {
   n: 9,
   title: "Financials",
   ground: "ink",
-  headline: "A proof market first: small, real revenue from named customers",
+  headline: "Self-funded Plan A: break-even in about six months",
   unitHeading: "Unit economics, all modelled",
   perLitre: "per litre",
   perGram: "per gram of iron",
@@ -191,26 +176,29 @@ export const d3Financials = {
     { label: "Production cost", litre: a("cost-10", "CAD 10.00"), gram: "CAD 0.15" },
     { label: "Gross margin", litre: a("gross-margin", "CAD 15.00 (60%)"), gram: "CAD 0.23" },
   ],
-  yearsHeading: "Years 1 to 3, built from customers",
+  unitExtras: ["Founder-funded capital: CAD 100,000", "Break-even: about 7,500 litres (6 months)"],
+  yearsHeading: "Years 1 to 3, Plan A (self-funded)",
   // Named stepsClaim so the audit counter sees a claim that tags a whole block.
   stepsClaim: "three-year" as ClaimId,
-  yearsNote: "Every figure in this table is an assumption.",
+  yearsNote: "Every figure in this table comes from our Plan A self-funded financial model and is an assumption.",
   years: [
-    { label: "Year 1", span: "Q4 2026 to Q3 2027", revenue: 0, revenueText: "CAD 0" },
-    { label: "Year 2", span: "Q4 2027 to Q3 2028", revenue: 22500, revenueText: "CAD 22,500" },
-    { label: "Year 3", span: "Q4 2028 to Q3 2029", revenue: 60000, revenueText: "CAD 60,000" },
+    { label: "Year 1", span: "Q4 2027 to Q3 2028", revenue: 375000, revenueText: "CAD 375,000" },
+    { label: "Year 2", span: "Q4 2028 to Q3 2029", revenue: 750000, revenueText: "CAD 750,000" },
+    { label: "Year 3", span: "Q4 2029 to Q3 2030", revenue: 1875000, revenueText: "CAD 1,875,000" },
   ],
-  ceiling: { value: 300000, label: "Maritime ceiling: CAD 300,000 a year, 100 percent of current spend" },
   rows: [
-    { label: "Paying customers", values: [["0 (1 to 2 unpaid trial hosts)"], ["3"], ["8"]] as Line[] },
-    { label: "Litres per customer per year", values: [["n/a"], ["300"], ["300"]] as Line[] },
-    { label: "Litres sold", values: [["0"], ["900"], ["2,400"]] as Line[] },
-    { label: "Production cost", values: [["Trial product only ", ph("trial-cost")], ["CAD 9,000"], ["CAD 24,000"]] as Line[] },
-    { label: "Gross margin", values: [["Negative (trial cost)"], ["CAD 13,500"], ["CAD 36,000"]] as Line[] },
-    { label: "Share of Maritime ceiling (12,000 L)", values: [["0%"], ["7.5%"], ["20%"]] as Line[] },
+    { label: "Production", values: [["15,000 L"], ["30,000 L"], ["75,000 L"]] as Line[] },
+    { label: "Revenue", values: [["CAD 375,000"], ["CAD 750,000"], ["CAD 1,875,000"]] as Line[] },
+    { label: "Total costs", values: [["CAD 230,000"], ["CAD 410,000"], ["CAD 950,000"]] as Line[] },
+    { label: "Net profit", values: [["CAD 145,000"], ["CAD 340,000"], ["CAD 925,000"]] as Line[] },
+    {
+      label: "Cumulative cash flow (after CAD 100,000 founder capital)",
+      values: [["CAD 45,000"], ["CAD 385,000"], ["CAD 1,310,000"]] as Line[],
+    },
   ],
+  raise: "Raising CAD 200K to CAD 2M would let us scale faster than self-funded Plan A.",
   honest:
-    "Price and cost are founders' models. No grower has been quoted the price and no batch has been produced in Canada. Both numbers will be replaced by a discovery-call price and a measured Canadian batch cost.",
+    "Plan A is a self-funded founders' model covering Canada as a whole, not one region. Price, cost and volumes are assumptions. No grower has been quoted the price and no batch has been produced in Canada yet. Price and cost will be replaced by a discovery-call price and a measured Canadian batch cost.",
   notes:
     "What this is not: gross margin only. It excludes CFIA fees, sample shipping and import, UNB test materials, a Canadian reactor, packaging and travel [placeholder: bottom-up budget].",
   detail: [
@@ -227,7 +215,7 @@ export const d3Status = {
   n: 10,
   title: "Status and ask",
   ground: "ink",
-  headline: "Where we are, the next four quarters, and one ask",
+  headline: "Where we are, the next four quarters, and our ask",
   todayLabel: "Today",
   today: [
     "Incorporated in NB. Product assayed. UNB lab and supervisor secured. Iron chelate stock in Iran, none in Canada. Zero grower conversations counted. Spendable cash CAD 17,250. ",
@@ -239,34 +227,36 @@ export const d3Status = {
     {
       q: "Q4 2026",
       months: "Oct to Dec",
-      milestone: `Five grower conversations (target: before Gate 1, 7 Oct); sample into Canada; CFIA pathway call; Mitacs decision; Fe-${agent} dealer quotes`,
-      gate: [a("import-gate", "Import cleared with CFIA, CBSA and Global Affairs Canada (Iran sanctions)")] as Line,
+      milestone: `Five grower conversations; new sample produced in Canada; CFIA pathway call to learn the registration route, fees and timeline; Fe-${agent} dealer quotes`,
+      gate: [a("import-gate", "New sample produced in Canada and validated")] as Line,
       pivot: false,
     },
     {
       q: "Q1 2027",
       months: "Jan to Mar",
-      milestone: "UNB pH-response test with recorded pH at every step; first container application rate",
-      gate: [{ b: "Pivot decision: " }, a("pivot-gate", "extended-pH performance confirmed or not")] as Line,
-      pivot: true,
+      milestone:
+        "UNB pH-response test with recorded pH at every step, up to pH 8; first container application rate; CFIA application prepared; website and marketing launch; first distributor conversations in NB and Ontario",
+      gate: [a("pivot-gate", "pH-response result confirmed up to pH 8; CFIA route and fees known")] as Line,
+      pivot: false,
     },
     {
       q: "Q2 2027",
       months: "Apr to Jun",
-      milestone: "Grower-site trial on calibrachoa and petunia across the spring shipping window",
+      milestone:
+        "Grower-site trial on calibrachoa and petunia across the spring shipping window; CFIA application filed; distributor onboarding in NB and Ontario",
       gate: [a("trial-gate", "Trial host signed; CFIA application filed")] as Line,
       pivot: false,
     },
     {
       q: "Q3 2027",
       months: "Jul to Sep",
-      milestone: "Trial results written up; first letter of intent; costed plan for a first Canadian batch",
+      milestone: "Trial results written up; letters of intent; CFIA status known; Plan A Year 1 starts in Q4 2027",
       gate: [a("loi-gate", "LOI in hand; CFIA status known")] as Line,
       pivot: false,
     },
   ],
   askLabel: "The ask",
-  ask: "Introductions to Maritime greenhouse growers who grow calibrachoa or petunia baskets on well water and have seen yellowing in the last two seasons, so we can sign one trial host for spring 2027.",
+  ask: "Introductions to growers and distributors in New Brunswick and Ontario for our first trials, and investor conversations for a CAD 200K to 2M raise to accelerate Plan A.",
   notes:
     "Why the ask is introductions, not money: there is no bottom-up budget yet, and asking for a figure we cannot defend line by line would undercut every honest tag in this deck.",
   detail: [

@@ -5,10 +5,12 @@ import { Claim } from "../components/Claim";
 import { DeckShell } from "../components/DeckShell";
 import { useDeck } from "../components/DeckContext";
 import { AuditHint } from "../components/SlideFrame";
+import { Tag } from "../components/Tag";
 import { VideoPanel } from "../components/VideoPanel";
 import { useReducedMotion } from "../hooks/useReducedMotion";
 import { build, Frame } from "./Frame";
 import { SlidesSixToTen } from "./SlidesSixToTen";
+import { Slide11 } from "./Slide11";
 import {
   d3ClaimsInDeck,
   d3ClaimsPerSlide,
@@ -31,6 +33,7 @@ export function DraftThree() {
       <SolutionSlide />
       <ModelSlide />
       <SlidesSixToTen />
+      <Slide11 />
     </DeckShell>
   );
 }
@@ -76,11 +79,17 @@ function ProblemSlide() {
         <p className="d3-sub d3-in" style={build(1)}>
           {c.subhead}
         </p>
-        <div className="d3-2__figure d3-in" style={build(2)}>
-          <Claim id={c.figure.claim} block>
-            <span className="d3-figure">{c.figure.text}</span>
-            <span className="d3-figure-label">{c.figureLabel}</span>
-          </Claim>
+        <div className="d3-2__pair d3-in" style={build(2)}>
+          {c.figures.map((f) => (
+            <div key={f.figure}>
+              <span className="d3-figure d3-figure--market">{f.figure}</span>
+              <span className="d3-figure-label">{f.label}</span>
+            </div>
+          ))}
+        </div>
+        <div className="d3-2__evidence d3-in" style={build(3)}>
+          <Tag kind="evidence" source={c.evidenceSource} />
+          <p className="d3-2__source">{c.sourceNote}</p>
         </div>
       </div>
     </Frame>
@@ -102,9 +111,6 @@ function ValueSlide() {
         <div className="d3-in" style={build(2)}>
           <PhScale copy={c.scale} active={active === 2} />
         </div>
-        <p className="d3-closer d3-in" style={build(3)}>
-          {c.closer}
-        </p>
       </div>
     </Frame>
   );
@@ -117,9 +123,10 @@ function SolutionSlide() {
     <Frame slide={c} index={3}>
       <div className="d3-center">
         <div className="d3-in" style={build(0)}>
-          <Claim id={c.stepsClaim} block note={c.stepsNote}>
-            <h2 className="d3-title">{c.headline}</h2>
-          </Claim>
+          <h2 className="d3-title">{c.headline}</h2>
+          <p className="d3-4__note">
+            <Tag kind="evidence" /> {c.evidenceNote}
+          </p>
         </div>
         <div className="d3-4__video d3-in" style={build(1)}>
           <VideoPanel video={solutionSlide.video} active={active === 3} />
@@ -157,9 +164,6 @@ function ModelSlide() {
           {c.closerLead} <Claim id={c.closerClaim.claim}>{c.closerClaim.text}</Claim>
         </p>
       </div>
-      <p className="d3-fine d3-5__withdrawn d3-in" style={build(4)}>
-        {c.withdrawn}
-      </p>
     </Frame>
   );
 }
@@ -238,7 +242,7 @@ function PhScale({ copy, active }: { copy: (typeof d3Value)["scale"]; active: bo
         {copy.standard}
       </span>
       <span className="d3-scale__label" style={{ left: px(6) + 14, top: Y_CLAIM - 32 }}>
-        <Claim id={copy.claim.claim}>{copy.claim.text}</Claim>
+        {copy.claim} <Tag kind="evidence" />
       </span>
       {TICKS.map((t) => (
         <span key={t} className={`d3-scale__tick${t === 6.5 ? " is-key" : ""}${t === 5 ? " is-first" : ""}`} style={{ left: px(t), top: Y_AXIS + 14 }}>

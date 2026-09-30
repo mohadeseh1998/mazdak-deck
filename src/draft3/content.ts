@@ -5,6 +5,7 @@ import { CHELATE } from "../content/chemistry";
 import type { ClaimId } from "../content/claims";
 import { collectClaims, type Ground } from "../content/slides";
 import { d3SlidesSixToTen } from "./content6to10";
+import { d3Recognition } from "./content11";
 
 const agent = CHELATE.agent;
 
@@ -47,8 +48,15 @@ export const d3Problem = {
   ground: "ink",
   headline: "A yellow basket does not sell.",
   subhead: "Bicarbonate-rich well water pushes greenhouse pots past pH 6.0, and the iron locks up.",
-  figure: { claim: "problem-cost", text: "$0.8M to $2.0M" } satisfies D3Claim,
-  figureLabel: "Annual cost of the problem in NB, NS and PEI",
+  // Market size, tagged as evidence (deck_edits.md, slide 2). USD 190M is all
+  // nutrients, not an iron-only market.
+  figures: [
+    { figure: "USD 1.5B", label: "North America micronutrient fertilizer market, 2025" },
+    { figure: "about USD 190M", label: "Canada share (12.8%), all nutrients. Iron is one part of it." },
+  ],
+  evidenceSource: "GM Insights, paid-research estimate",
+  sourceNote:
+    "Paid-research estimates (GM Insights). Canada = 12.8% x USD 1.5B. Iron-only figure not yet known. To be verified in IBISWorld.",
   notes: "The agronomy question about acidic Atlantic soils is coming. Answer: the problem lives in irrigation water and container media, not the soil outside.",
   detail: [
     "Calibrachoa and petunia need pH 5.4 to 6.0. Bicarbonate-rich wells push soilless media above that over a ten-week crop.",
@@ -69,9 +77,8 @@ export const d3Value = {
     title: `pH scale: standard Fe-${agent} works to 6.5, customer media sits at 6.0 to 7.2, our claimed range reaches 8.0`,
     standard: `Standard ${agent}`,
     customers: "Where customers are",
-    claim: { claim: "ph-extension", text: "Our claim" } satisfies D3Claim,
+    claim: "Our claim",
   },
-  closer: "The first Canadian trial decides it.",
   notes:
     `Do not oversell. If asked 'what if you are wrong': we become a conventional Fe-${agent} competing on price, and we would rather you heard that from us.`,
   detail: [
@@ -87,8 +94,7 @@ export const d3Solution = {
   title: "Solution",
   ground: "ink",
   headline: "20 minutes. Not 12 hours.",
-  stepsClaim: "process-time" as ClaimId,
-  stepsNote: "Verified in our pilot. Not yet reproduced in Canada.",
+  evidenceNote: "Verified in our pilot.",
   notes:
     "If asked whether twenty minutes has been reproduced in Canada: no, and UNB plus the Mitacs grant is the route.",
   detail: [
@@ -110,7 +116,6 @@ export const d3Model = {
   costLabel: "Modelled cost per litre",
   closerLead: "The Maritimes earns references.",
   closerClaim: { claim: "ontario", text: "Ontario earns revenue." } satisfies D3Claim,
-  withdrawn: "Withdrawn this week: the CAD 9.375M Year 3 scenario and the Sprint 330 cost comparison.",
   notes: "If asked why start in a market this small: references and an application rate, not revenue.",
   detail: [
     "Capturing one hundred percent of current Maritime spend is about 12,000 litres a year.",
@@ -122,7 +127,8 @@ export const d3Model = {
 } satisfies D3Slide & Record<string, unknown>;
 
 // Slides 6 to 10 (Kawasaki brief) follow the original five unchanged.
-export const d3Slides = [d3Title, d3Problem, d3Value, d3Solution, d3Model, ...d3SlidesSixToTen] as const;
+// Slide 11 (recognition) follows, from deck_edits.md.
+export const d3Slides = [d3Title, d3Problem, d3Value, d3Solution, d3Model, ...d3SlidesSixToTen, d3Recognition] as const;
 
 export const d3ClaimsPerSlide: number[] = d3Slides.map((s) => collectClaims(s).size);
 export const d3ClaimsInDeck: number = collectClaims(d3Slides).size;

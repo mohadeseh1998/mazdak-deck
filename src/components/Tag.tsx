@@ -8,7 +8,7 @@ const CARD_W = 320;
 const EDGE = 24;
 
 type Props =
-  | { kind: "evidence"; source: string; children?: ReactNode }
+  | { kind: "evidence"; source?: string; children?: ReactNode }
   | { kind: "placeholder"; id: PlaceholderId; children?: ReactNode };
 
 /**
@@ -41,16 +41,19 @@ export function Tag(props: Props) {
 
   const card =
     props.kind === "evidence"
-      ? { lead: "Source:", text: props.source }
+      ? props.source
+        ? { lead: "Source:", text: props.source }
+        : null
       : { lead: "Missing:", text: `${placeholders[props.id].missing}. From: ${placeholders[props.id].from}.` };
 
-  const stage = open ? stageEl() : null;
+  // An evidence tag without a named source shows no card.
+  const stage = open && card ? stageEl() : null;
 
   return (
     <span
       className={`tagged tagged--${props.kind}`}
-      tabIndex={0}
-      aria-describedby={open ? cardId : undefined}
+      tabIndex={card ? 0 : undefined}
+      aria-describedby={open && card ? cardId : undefined}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
       onFocus={() => setOpen(true)}
@@ -62,6 +65,7 @@ export function Tag(props: Props) {
       </span>
       {stage &&
         pos &&
+        card &&
         createPortal(
           <div
             id={cardId}

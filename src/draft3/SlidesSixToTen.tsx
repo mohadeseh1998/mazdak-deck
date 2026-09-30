@@ -19,6 +19,23 @@ export function SlidesSixToTen() {
   );
 }
 
+/** A headline whose hyphenated words (break-even, self-funded) never split at the hyphen. */
+function Headline({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(/(\S+-\S+)/).map((part, i) =>
+        i % 2 ? (
+          <span key={i} className="nowrap">
+            {part}
+          </span>
+        ) : (
+          part
+        ),
+      )}
+    </>
+  );
+}
+
 /** Renders a line of plain text, bold, assumptions, evidence and placeholders. */
 function L({ line }: { line: Line }) {
   return (
@@ -49,7 +66,7 @@ function GoToMarket() {
     <Frame slide={c} index={5}>
       <div className="d3-page">
         <h2 className="d3-page__title d3-in" style={build(0)}>
-          {c.headline}
+          <Headline text={c.headline} />
         </h2>
 
         <div className="d3-ladder d3-in" style={build(1)}>
@@ -102,7 +119,7 @@ function Competition() {
     <Frame slide={c} index={6}>
       <div className="d3-page">
         <h2 className="d3-page__title d3-in" style={build(0)}>
-          {c.headline}
+          <Headline text={c.headline} />
         </h2>
         <table className="d3-table d3-in" style={build(1)}>
           <thead>
@@ -146,7 +163,7 @@ function Team() {
     <Frame slide={c} index={7}>
       <div className="d3-page">
         <h2 className="d3-page__title d3-in" style={build(0)}>
-          {c.headline}
+          <Headline text={c.headline} />
         </h2>
         <div className="d3-team">
           {c.people.map((p, i) => {
@@ -164,13 +181,6 @@ function Team() {
               </div>
             );
           })}
-          <div className="d3-person d3-person--hire d3-in" style={build(4)}>
-            <div className="d3-person__face d3-person__face--empty" aria-hidden="true">
-              +
-            </div>
-            <h3 className="d3-person__name">{c.hireLabel}</h3>
-            <p className="d3-person__hire">{c.hire}</p>
-          </div>
         </div>
       </div>
     </Frame>
@@ -188,12 +198,14 @@ const BAR_W = 120;
 function Financials() {
   const c = d3Financials;
   const colX = (i: number) => 300 + i * 160 + 80; // centres of the three year columns
-  const y = (v: number) => CHART_H - (v / c.ceiling.value) * (CHART_H - 40);
+  // Bars scale to the largest year, leaving room above it for its label.
+  const max = Math.max(...c.years.map((yr) => yr.revenue));
+  const y = (v: number) => CHART_H - (v / max) * (CHART_H - 40);
   return (
     <Frame slide={c} index={8}>
       <div className="d3-page">
         <h2 className="d3-page__title d3-in" style={build(0)}>
-          {c.headline}
+          <Headline text={c.headline} />
         </h2>
         <div className="d3-fin">
           <div className="d3-fin__units d3-in" style={build(1)}>
@@ -212,6 +224,11 @@ function Financials() {
                 </Fragment>
               ))}
             </div>
+            <div className="d3-units__extras">
+              {c.unitExtras.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
+            </div>
           </div>
 
           <div className="d3-fin__years d3-in" style={build(2)}>
@@ -219,7 +236,6 @@ function Financials() {
               <h3 className="d3-kicker">{c.yearsHeading}</h3>
               <figure className="d3-chart" style={{ width: CHART_W, height: CHART_H + 50 }}>
                 <svg width={CHART_W} height={CHART_H} viewBox={`0 0 ${CHART_W} ${CHART_H}`} aria-hidden="true">
-                  <line className="d3-chart__ceiling" x1={300} x2={CHART_W} y1={y(c.ceiling.value)} y2={y(c.ceiling.value)} />
                   <line className="d3-chart__base" x1={300} x2={CHART_W} y1={CHART_H - 0.5} y2={CHART_H - 0.5} />
                   {c.years.map((yr, i) => (
                     <rect
@@ -233,9 +249,6 @@ function Financials() {
                     />
                   ))}
                 </svg>
-                <span className="d3-chart__ceiling-label" style={{ left: 300, top: y(c.ceiling.value) - 26 }}>
-                  {c.ceiling.label}
-                </span>
                 {c.years.map((yr, i) => (
                   <Fragment key={yr.label}>
                     <span className="d3-chart__value" style={{ left: colX(i), top: y(yr.revenue) - 30 }}>
@@ -264,7 +277,10 @@ function Financials() {
             </Claim>
           </div>
         </div>
-        <p className="d3-honest d3-in" style={build(3)}>
+        <p className="d3-raise d3-in" style={build(3)}>
+          {c.raise}
+        </p>
+        <p className="d3-honest d3-in" style={build(4)}>
           {c.honest}
         </p>
       </div>
@@ -282,7 +298,7 @@ function Status() {
     <Frame slide={c} index={9}>
       <div className="d3-page">
         <h2 className="d3-page__title d3-in" style={build(0)}>
-          {c.headline}
+          <Headline text={c.headline} />
         </h2>
         <p className="d3-today d3-in" style={build(1)}>
           <strong>{c.todayLabel}</strong> <L line={c.today} />

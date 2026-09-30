@@ -9,7 +9,7 @@
 // (subpath hosting, USB stick), and a copy can drift from the client's folder.
 // Globbing the client's folder directly keeps one source of truth and emits
 // relative URLs that work from any location.
-const found = import.meta.glob("../../assets/*.{png,jpg,jpeg,webp,mp4}", {
+const found = import.meta.glob(["../../assets/*.{png,jpg,jpeg,webp,mp4}", "../../assets/recognition_images/*.{png,jpg,jpeg,webp}"], {
   eager: true,
   query: "?url",
   import: "default",
@@ -22,8 +22,14 @@ const byName = new Map<string, string>(
 
 const pick = (name: string): string | undefined => byName.get(name.toLowerCase());
 
-/** Optional files by name, for slots that appear only when the client adds them. */
-export const assetNamed = pick;
+/**
+ * Optional files by name, for slots that appear only when the client adds
+ * them. Accepts the same base name with a .jpg, .jpeg, .png or .webp ending.
+ */
+export const assetNamed = (name: string): string | undefined => {
+  const base = name.replace(/\.(jpe?g|png|webp)$/i, "");
+  return pick(name) ?? [".jpg", ".jpeg", ".png", ".webp"].map((ext) => pick(base + ext)).find(Boolean);
+};
 
 export const assets = {
   logo: pick("logo.png"),

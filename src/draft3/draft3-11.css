@@ -1,0 +1,130 @@
+/* Draft 3, slide 11: recognition cards on the same black stage. */
+
+.d3-awards {
+  display: grid;
+  grid-template-columns: 520px minmax(0, 1fr);
+  column-gap: 28px;
+  width: 100%;
+  height: 620px;
+  margin-top: 44px;
+}
+
+.d3-awards__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+  min-height: 0;
+}
+
+.d3-award {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  padding: 20px;
+  border: 1px solid rgb(255 255 255 / 0.08);
+  border-radius: 20px;
+  background: rgb(255 255 255 / 0.045);
+  text-align: left;
+}
+
+/* Cards without images sit their text on the same line as their neighbours. */
+.d3-award--text {
+  justify-content: flex-end;
+}
+
+/* Headings sit at the foot of every card, so they line up across a row. */
+.d3-award__heading {
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 20px;
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--fg);
+}
+
+.d3-award--text .d3-award__heading {
+  padding-top: 0;
+}
+
+.d3-award__text {
+  margin-top: 6px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+
+.d3-award__medals {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  height: 320px;
+  flex: none;
+}
+
+.d3-award__thumbs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  height: 110px;
+  margin-top: 12px;
+  flex: none;
+}
+
+.d3-award__images {
+  display: grid;
+  gap: 10px;
+  height: 160px;
+  flex: none;
+}
+
+.d3-award__images--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.d3-shot {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #1c1c1e;
+}
+
+.d3-shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* A file not added yet: a quiet frame naming it, so nothing shifts later. */
+.d3-shot--missing {
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  border: 1px dashed #48484a;
+  background: transparent;
+}
+
+.d3-shot__missing {
+  font-size: 12px;
+  line-height: 1.3;
+  color: #6e6e73;
+  text-align: center;
+  word-break: break-all;
+}
+
+@media print {
+  .d3-award {
+    background: transparent;
+    border-color: #d1d1d6;
+  }
+
+  .d3-shot {
+    background: #f2f2f7;
+  }
+}
