@@ -10,6 +10,14 @@ A five-slide, keyboard-driven presentation built from `mazdak-pitch-deck-build-b
 
 All drafts share the same keys, audit mode, source register, video fallback and print stylesheet.
 
+## Public link
+
+The deck is published with GitHub Pages at
+**https://mohadeseh1998.github.io/mazdak-deck/** (slide 11: `#/11`).
+
+Pages serves the built copy in `docs/`. After any edit, run `npm run publish`,
+then commit and push `docs/` to update the public link.
+
 ## Run it
 
 ```sh
